@@ -22,8 +22,14 @@ class Bytepath {
 	private function init():Void {
 		_input.bind(GameActions.Test, Input.Key(KeyCode.Space));
 
-		var testTimer = Timer.after(3, () -> trace("3 seconds elapsed!"));
-		// Timer.cancel(testTimer);
+		var h = Timer.every(1, () -> trace("tick!"));
+		Timer.after(3, () -> trace("3 seconds elapsed!"));
+		Timer.after(4, () -> {
+			trace("4 seconds elapsed! Stop ticking in 3 ticks...");
+			Timer.after(3, () -> Timer.cancel(h));
+		});
+		Timer.after(3, () -> trace("3 seconds elapsed second!"));
+		Timer.during(2, (dt) -> trace("During..."), () -> trace("TIME !"));
 	}
 
 	public function update(dt:Float):Void {

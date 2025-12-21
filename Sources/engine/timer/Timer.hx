@@ -23,7 +23,7 @@ class Timer {
 		return _add(new DuringTask(duration, onUpdate, onComplete));
 	}
 
-	public static function cancel(handle:TimerHandle) {
+	public static function cancel(handle:TimerHandle):Void {
 		if (!_tasks.exists(handle)) {
 			return;
 		}
@@ -31,7 +31,7 @@ class Timer {
 		_tasks.remove(handle);
 	}
 
-	public static function clear() {
+	public static function clear():Void {
 		_tasks.clear();
 	}
 
