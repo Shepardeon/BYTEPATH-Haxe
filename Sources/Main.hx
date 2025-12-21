@@ -1,5 +1,6 @@
 package;
 
+import haxe.macro.Expr.Constant;
 import kha.Window;
 import kha.Scheduler;
 import kha.Framebuffer;
@@ -18,10 +19,10 @@ class Main {
 		System.notifyOnFrames((buffers:Array<Framebuffer>) -> game.render(buffers[0]));
 		Scheduler.addTimeTask(() -> {
 			var currentTime = Scheduler.time();
-			_deltaTime = currentTime - _lastTime;
+			_deltaTime = currentTime - (_lastTime ?? currentTime);
 			_lastTime = currentTime;
 
-			game.update(_deltaTime);
+			game.update(_deltaTime ?? Constants.UPDATE_RATE);
 		}, 0, Constants.UPDATE_RATE);
 	}
 }

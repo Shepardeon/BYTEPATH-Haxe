@@ -1,5 +1,6 @@
 package;
 
+import engine.timer.Timer;
 import kha.input.KeyCode;
 import engine.input.Action;
 import engine.input.InputManager;
@@ -20,12 +21,13 @@ class Bytepath {
 
 	private function init():Void {
 		_input.bind(GameActions.Test, Input.Key(KeyCode.Space));
+
+		var testTimer = Timer.after(3, () -> trace("3 seconds elapsed!"));
+		// Timer.cancel(testTimer);
 	}
 
 	public function update(dt:Float):Void {
-		trace("Input: up=" + _input.isUp(GameActions.Test) + ", down=" + _input.isDown(GameActions.Test) + ", pressed=" + _input.isPressed(GameActions.Test)
-			+ ", released=" + _input.isReleased(GameActions.Test));
-
+		Timer.update(dt);
 		_input.update();
 	}
 
