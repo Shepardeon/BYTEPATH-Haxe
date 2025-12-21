@@ -1,5 +1,6 @@
 package;
 
+import engine.timer.tweens.Easing;
 import engine.timer.Timer;
 import kha.input.KeyCode;
 import engine.input.Action;
@@ -19,20 +20,23 @@ class Bytepath {
 		Assets.loadEverything(init);
 	}
 
+	var x:Float = 0;
+	var y:Float = 0;
+
 	private function init():Void {
 		_input.bind(GameActions.Test, Input.Key(KeyCode.Space));
 
-		var h = Timer.every(1, () -> trace("tick!"));
-		Timer.after(3, () -> trace("3 seconds elapsed!"));
-		Timer.after(4, () -> {
-			trace("4 seconds elapsed! Stop ticking in 3 ticks...");
-			Timer.after(3, () -> Timer.cancel(h));
-		});
-		Timer.after(3, () -> trace("3 seconds elapsed second!"));
-		Timer.during(2, (dt) -> trace("During..."), () -> trace("TIME !"));
+		// Will complete
+		Timer.tween(2, Easing.inOutBack).to(() -> x, (v) -> x = v, 2).then(() -> trace(x));
+
+		// Will cancel halfway through
+		var tween = Timer.tween(2).to(() -> y, (v) -> y = v, 2).then(() -> trace(y));
+		Timer.after(1, () -> tween.cancel());
 	}
 
 	public function update(dt:Float):Void {
+		trace("X:" + x + "\tY:" + y);
+
 		Timer.update(dt);
 		_input.update();
 	}

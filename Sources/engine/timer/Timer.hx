@@ -1,5 +1,10 @@
 package engine.timer;
 
+import engine.timer.handlers.TweenHandle;
+import engine.timer.tasks.TweenTask;
+import engine.timer.tweens.Tween;
+import engine.timer.tweens.Easing;
+import engine.timer.tweens.Tween.Ease;
 import engine.timer.tasks.DuringTask;
 import engine.timer.tasks.EveryTask;
 import engine.timer.tasks.AfterTask;
@@ -21,6 +26,13 @@ class Timer {
 
 	public static function during(duration:Float, onUpdate:(Float) -> Void, onComplete:Null<() -> Void> = null):TimerHandle {
 		return _add(new DuringTask(duration, onUpdate, onComplete));
+	}
+
+	public static function tween(duration:Float, ease:Null<Ease> = null):TweenHandle {
+		var tween = new Tween(duration, ease ?? Easing.linear);
+		var handle = _add(new TweenTask(tween));
+
+		return new TweenHandle(handle, tween);
 	}
 
 	public static function cancel(handle:TimerHandle):Void {
