@@ -11,7 +11,7 @@ class Main {
 	private static var _lastTime:Float = Scheduler.time();
 
 	public static function main() {
-		System.start({title: Constants.PROJECT_NAME, width: Constants.WINDOW_HEIGHT, height: Constants.WINDOW_HEIGHT}, init);
+		System.start({title: Constants.PROJECT_NAME, width: Constants.WINDOW_WIDTH, height: Constants.WINDOW_HEIGHT}, init);
 	}
 
 	static function init(_:Window) {
