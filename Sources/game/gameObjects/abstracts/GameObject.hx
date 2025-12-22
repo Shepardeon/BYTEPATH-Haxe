@@ -25,6 +25,10 @@ abstract class GameObject {
 		_dead = isDead;
 	}
 
+	public function getPos():Vector2 {
+		return _pos;
+	}
+
 	public abstract function update(dt:Float):Void;
 
 	public abstract function render():Void;
