@@ -50,11 +50,17 @@ class Timer {
 	// -- API END ------------------------------------------------------
 
 	public static function update(dt:Float):Void {
+		var toRemove:Array<TimerHandle> = [];
+
 		for (h => task in _tasks) {
 			task.update(dt);
 			if (task.finished) {
-				_tasks.remove(h);
+				toRemove.push(h);
 			}
+		}
+
+		for (h in toRemove) {
+			_tasks.remove(h);
 		}
 	}
 
