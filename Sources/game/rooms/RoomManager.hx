@@ -13,9 +13,7 @@ class RoomManager {
 	}
 
 	public function render(g:Graphics):Void {
-		g.begin();
 		_currentRoom?.render(g);
-		g.end();
 	}
 
 	public function goToRoom(room:Room):Void {
