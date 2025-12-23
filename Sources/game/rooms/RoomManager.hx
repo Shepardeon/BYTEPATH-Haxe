@@ -1,5 +1,6 @@
 package game.rooms;
 
+import kha.graphics2.Graphics;
 import game.rooms.abstracts.Room;
 
 class RoomManager {
@@ -11,8 +12,10 @@ class RoomManager {
 		_currentRoom?.update(dt);
 	}
 
-	public function render():Void {
-		_currentRoom?.render();
+	public function render(g:Graphics):Void {
+		g.begin();
+		_currentRoom?.render(g);
+		g.end();
 	}
 
 	public function goToRoom(room:Room):Void {

@@ -1,5 +1,6 @@
 package game.rooms;
 
+import kha.graphics2.Graphics;
 import utils.VectorUtils;
 import kha.math.Vector2;
 import game.gameObjects.abstracts.GameObject;
@@ -58,9 +59,9 @@ class Area {
 		}
 	}
 
-	public function render():Void {
+	public function render(g:Graphics):Void {
 		for (go in _gameObjects) {
-			go.render();
+			go.render(g);
 		}
 	}
 

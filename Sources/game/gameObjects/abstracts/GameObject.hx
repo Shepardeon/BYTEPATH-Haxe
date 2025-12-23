@@ -1,5 +1,6 @@
 package game.gameObjects.abstracts;
 
+import kha.graphics2.Graphics;
 import utils.UUID;
 import game.rooms.Area;
 import kha.math.Vector2;
@@ -31,5 +32,5 @@ abstract class GameObject {
 
 	public abstract function update(dt:Float):Void;
 
-	public abstract function render():Void;
+	public abstract function render(g:Graphics):Void;
 }
