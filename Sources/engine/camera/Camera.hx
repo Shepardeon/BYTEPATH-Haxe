@@ -12,6 +12,9 @@ class Camera {
 	private var _rotation:Float;
 
 	private var _viewMatrix:FastMatrix3;
+	private var _vShakes:Array<CameraShake> = [];
+	private var _hShakes:Array<CameraShake> = [];
+	private var _lastShakePos:Vector2 = new Vector2();
 
 	public function new(pos:Vector2, width:Int, height:Int, scale:Float, rotation:Float) {
 		_pos = pos;
@@ -59,6 +62,49 @@ class Camera {
 		worldCoords.y = sin * worldCoords.x + cos * worldCoords.y;
 
 		return worldCoords;
+	}
+
+	public function shakeX(intensity:Float, duration:Float, frequency:Float = 60):Void {
+		_hShakes.push(new CameraShake(intensity, duration, frequency));
+	}
+
+	public function shakeY(intensity:Float, duration:Float, frequency:Float = 60):Void {
+		_vShakes.push(new CameraShake(intensity, duration, frequency));
+	}
+
+	public function shake(intensity:Float, duration:Float, frequency:Float = 60):Void {
+		shakeX(intensity, duration, frequency);
+		shakeY(intensity, duration, frequency);
+	}
+
+	public function update(dt:Float):Void {
+		var hShakeAmount:Float = _updateShakeList(_hShakes, dt);
+		var vShakeAmount:Float = _updateShakeList(_vShakes, dt);
+
+		_pos.x -= _lastShakePos.x;
+		_pos.y -= _lastShakePos.y;
+
+		move(hShakeAmount, vShakeAmount);
+
+		_lastShakePos.x = hShakeAmount;
+		_lastShakePos.y = vShakeAmount;
+	}
+
+	private function _updateShakeList(shakeList:Array<CameraShake>, dt:Float):Float {
+		var shakeAmount:Float = 0;
+
+		for (i in 0...shakeList.length) {
+			var idx = shakeList.length - 1 - i;
+			var shake = shakeList[idx];
+
+			shake.update(dt);
+			shakeAmount += shake.getAmplitude();
+			if (shake.finished) {
+				shakeList.remove(shake);
+			}
+		}
+
+		return shakeAmount;
 	}
 
 	private function _computeViewMatrix():Void {

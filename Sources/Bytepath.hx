@@ -1,5 +1,7 @@
 package;
 
+import haxe.io.Input;
+import engine.input.Action;
 import kha.math.Vector2;
 import kha.System;
 import kha.Scaler;
@@ -11,6 +13,10 @@ import engine.camera.Camera;
 import engine.input.InputManager;
 import game.rooms.RoomManager;
 import game.rooms.concretes.Stage;
+
+class GameAction {
+	public static final Shake = Action.create();
+}
 
 class Bytepath {
 	private var _input:InputManager;
@@ -30,10 +36,17 @@ class Bytepath {
 
 	private function init():Void {
 		_roomManager.goToRoom(new Stage());
+
+		_input.bind(GameAction.Shake, Input.Key(F3));
 	}
 
 	public function update(dt:Float):Void {
 		_roomManager.update(dt);
+		_mainCamera.update(dt);
+
+		if (_input.isPressed(GameAction.Shake)) {
+			_mainCamera.shake(4, 0.5, 10);
+		}
 
 		Timer.update(dt);
 		_input.update();
