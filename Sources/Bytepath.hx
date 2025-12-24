@@ -15,17 +15,18 @@ import game.rooms.RoomManager;
 import game.rooms.concretes.Stage;
 
 class GameAction {
-	public static final Shake = Action.create();
+	public static final Test = Action.create();
 }
 
 class Bytepath {
-	private var _input:InputManager;
+	public static var input:InputManager;
+
 	private var _roomManager:RoomManager;
 	private var _renderTarget:Image;
 	private var _mainCamera:Camera;
 
 	public function new() {
-		_input = new InputManager();
+		input = new InputManager();
 		_roomManager = new RoomManager();
 		_renderTarget = Image.createRenderTarget(Constants.GAME_WIDTH, Constants.GAME_HEIGHT, null, NoDepthAndStencil, 0);
 		_mainCamera = new Camera(new Vector2(Constants.GAME_WIDTH / 2, Constants.GAME_HEIGHT / 2), Constants.GAME_WIDTH, Constants.GAME_HEIGHT, 1, 0);
@@ -37,19 +38,15 @@ class Bytepath {
 	private function init():Void {
 		_roomManager.goToRoom(new Stage());
 
-		_input.bind(GameAction.Shake, Input.Key(F3));
+		input.bind(GameAction.Test, Input.Key(F3));
 	}
 
 	public function update(dt:Float):Void {
 		_roomManager.update(dt);
 		_mainCamera.update(dt);
 
-		if (_input.isPressed(GameAction.Shake)) {
-			_mainCamera.shake(4, 0.5, 10);
-		}
-
 		Timer.update(dt);
-		_input.update();
+		input.update();
 	}
 
 	public function render(frame:Framebuffer):Void {
