@@ -14,6 +14,29 @@ class AABB {
 	}
 
 	/**
+	 * Returns true if other is another AABB intersecting the current AABB
+	 * @param other the other AABB to intersect 
+	 * @return Bool
+	 */
+	public function intersects(other:AABB):Bool {
+		if (other == this) {
+			return false;
+		}
+
+		var a_minX = this.pos.x;
+		var a_maxX = this.pos.x + this.width;
+		var a_minY = this.pos.y;
+		var a_maxY = this.pos.y + this.height;
+
+		var b_minX = other.pos.x;
+		var b_maxX = other.pos.x + other.width;
+		var b_minY = other.pos.y;
+		var b_maxY = other.pos.y + other.height;
+
+		return (a_minX <= b_maxX && a_maxX >= b_minX) && (a_minY <= b_maxY && a_maxY >= b_minY);
+	}
+
+	/**
 	 * Returns the 4 corners of the AABB in clockwise order from
 	 		* the top left corner.
 	 		* 
