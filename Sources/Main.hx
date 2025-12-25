@@ -14,7 +14,7 @@ class Main {
 		System.start({title: Constants.PROJECT_NAME, width: Constants.WINDOW_WIDTH, height: Constants.WINDOW_HEIGHT}, init);
 	}
 
-	static function init(_:Window) {
+	static function init(_:Window):Void {
 		var game = new Bytepath();
 		System.notifyOnFrames((buffers:Array<Framebuffer>) -> game.render(buffers[0]));
 		Scheduler.addTimeTask(() -> {

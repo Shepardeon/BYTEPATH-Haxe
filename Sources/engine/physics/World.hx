@@ -17,9 +17,9 @@ class World {
 		_bodies = [];
 	}
 
-	public function add(body:Body) {
+	public function add(body:Body):Void {
 		_bodies.push(body);
 	}
 
-	public function update(dt) {}
+	public function update(dt:Float):Void {}
 }
