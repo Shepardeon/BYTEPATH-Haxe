@@ -21,7 +21,7 @@ class Stage extends Room {
 		_area.update(dt);
 
 		if (Bytepath.input.isPressed(GameAction.Test)) {
-			_player.setDead(true);
+			_player.isDead = true;
 		}
 	}
 

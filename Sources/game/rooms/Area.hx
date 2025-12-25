@@ -7,11 +7,12 @@ import game.gameObjects.abstracts.GameObject;
 import game.rooms.abstracts.Room;
 
 class Area {
-	private var _room:Room;
+	public var room(default, null):Room;
+
 	private var _gameObjects:Array<GameObject>;
 
 	public function new(room:Room) {
-		_room = room;
+		this.room = room;
 		_gameObjects = [];
 	}
 
@@ -53,7 +54,7 @@ class Area {
 
 			go.update(dt);
 
-			if (go.isDead()) {
+			if (go.isDead) {
 				_gameObjects.remove(go);
 			}
 		}

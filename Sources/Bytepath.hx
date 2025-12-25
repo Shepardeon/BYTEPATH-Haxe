@@ -19,7 +19,7 @@ class GameAction {
 }
 
 class Bytepath {
-	public static var input:InputManager;
+	public static var input(default, null):InputManager;
 
 	private var _roomManager:RoomManager;
 	private var _renderTarget:Image;

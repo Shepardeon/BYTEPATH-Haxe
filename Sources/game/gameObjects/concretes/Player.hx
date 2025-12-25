@@ -14,6 +14,6 @@ class Player extends GameObject {
 	public function update(dt:Float) {}
 
 	public function render(g:Graphics) {
-		GraphicsUtils.drawCircle(g, _pos.x, _pos.y, 25);
+		GraphicsUtils.drawCircle(g, pos.x, pos.y, 25);
 	}
 }
