@@ -7,5 +7,9 @@ abstract class Collider {
 		this.body = body;
 	}
 
+	public function collide(other:Collider):CollisionManifold {
+		return CollisionDispatcher.collide(this, other);
+	}
+
 	public abstract function toAABB():AABB;
 }
