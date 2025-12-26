@@ -12,6 +12,7 @@ class World {
 	public var collisionMatrix(default, null):CollisionMatrix;
 
 	private var _bodies:Array<Body>;
+	private var _activeBodies:Array<Int>;
 
 	public function new(xGravity:Float = 0, yGravity:Float = 0, airFriction:Float = 0.1, groundFriction:Float = 0.2) {
 		this.xGravity = xGravity;
@@ -28,6 +29,10 @@ class World {
 
 	public function add(body:Body):Void {
 		_bodies.push(body);
+
+		if (!body.isStatic) {
+			_activeBodies.push(_bodies.length - 1);
+		}
 	}
 
 	public function update(dt:Float):Void {}
