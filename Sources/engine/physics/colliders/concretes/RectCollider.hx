@@ -6,8 +6,8 @@ class RectCollider extends Collider {
 	public var width(default, null):Float;
 	public var height(default, null):Float;
 
-	public function new(body:Body, width:Float, height:Float) {
-		super(body);
+	public function new(width:Float, height:Float, layer:Int = 0) {
+		this.layer = layer;
 		this.width = width;
 		this.height = height;
 	}

@@ -1,9 +1,10 @@
 package engine.physics.colliders.abstracts;
 
 abstract class Collider {
+	public var layer(default, null):Int = 0;
 	public var body(default, null):Body;
 
-	public function new(body:Body) {
+	public function attach(body:Body) {
 		this.body = body;
 	}
 

@@ -5,8 +5,8 @@ import engine.physics.colliders.abstracts.Collider;
 class CircleCollider extends Collider {
 	public var radius(default, null):Float;
 
-	public function new(body:Body, radius:Float) {
-		super(body);
+	public function new(radius:Float, layer:Int = 0) {
+		this.layer = layer;
 		this.radius = radius;
 	}
 

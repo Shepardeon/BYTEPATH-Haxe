@@ -1,10 +1,15 @@
 package engine.physics;
 
+import engine.physics.colliders.CollisionManifold;
+import engine.physics.colliders.CollisionMatrix;
+
 class World {
 	public var xGravity:Float;
 	public var yGravity:Float;
 	public var airFriction:Float;
 	public var groundFriction:Float;
+
+	public var collisionMatrix(default, null):CollisionMatrix;
 
 	private var _bodies:Array<Body>;
 
@@ -15,6 +20,10 @@ class World {
 		this.groundFriction = groundFriction;
 
 		_bodies = [];
+	}
+
+	public function initCollisionMatrix(layerCount:Int) {
+		collisionMatrix = new CollisionMatrix(layerCount);
 	}
 
 	public function add(body:Body):Void {
