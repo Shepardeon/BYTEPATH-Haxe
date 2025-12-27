@@ -1,26 +1,27 @@
 package engine.physics;
 
-import engine.physics.colliders.CollisionDispatcher;
 import kha.graphics2.Graphics;
-import engine.physics.colliders.CollisionManifold;
 import engine.physics.colliders.CollisionMatrix;
+import engine.physics.colliders.CollisionSolver;
 
 class World {
 	public var xGravity:Float;
 	public var yGravity:Float;
 	public var airFriction:Float;
 	public var groundFriction:Float;
+	public var bounceRestitution:Float;
 
 	public var collisionMatrix(default, null):CollisionMatrix;
 
 	private var _bodies:Array<Body>;
 	private var _activeBodies:Array<Int>;
 
-	public function new(xGravity:Float = 0, yGravity:Float = 0, airFriction:Float = 0.1, groundFriction:Float = 0.2) {
+	public function new(xGravity:Float = 0, yGravity:Float = 0, airFriction:Float = 0.1, groundFriction:Float = 0.2, bounceRestitution:Float = 0.8) {
 		this.xGravity = xGravity;
 		this.yGravity = yGravity;
 		this.airFriction = airFriction;
 		this.groundFriction = groundFriction;
+		this.bounceRestitution = bounceRestitution;
 
 		_bodies = [];
 	}
@@ -93,7 +94,7 @@ class World {
 					case Slide:
 						CollisionSolver.slide(a, b, collision);
 					case Bounce:
-						CollisionSolver.bounce(a, b, collision);
+						CollisionSolver.bounce(a, b, collision, bounceRestitution);
 				}
 			}
 
