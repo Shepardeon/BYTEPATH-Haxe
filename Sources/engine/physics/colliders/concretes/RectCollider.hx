@@ -21,7 +21,7 @@ class RectCollider extends Collider {
 		return new AABB(body.pos.x - halfW, body.pos.y - halfH, width, height);
 	}
 
-	public function draw(g:Graphics):Void {
+	public function render(g:Graphics):Void {
 		g.drawRect(body.pos.x - halfW, body.pos.y - halfH, width, height);
 	}
 }

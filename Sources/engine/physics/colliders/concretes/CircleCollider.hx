@@ -16,7 +16,7 @@ class CircleCollider extends Collider {
 		return new AABB(body.pos.x - radius, body.pos.y - radius, radius * 2, radius * 2);
 	}
 
-	public function draw(g:Graphics):Void {
+	public function render(g:Graphics):Void {
 		GraphicsUtils.drawCircle(g, body.pos.x, body.pos.y, radius);
 	}
 }

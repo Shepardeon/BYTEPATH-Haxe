@@ -16,5 +16,5 @@ abstract class Collider {
 
 	public abstract function toAABB():AABB;
 
-	public abstract function draw(g:Graphics):Void;
+	public abstract function render(g:Graphics):Void;
 }

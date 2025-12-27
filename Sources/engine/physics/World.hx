@@ -103,7 +103,7 @@ class World {
 		}
 	}
 
-	public function draw(g:Graphics):Void {
+	public function render(g:Graphics):Void {
 		for (body in _bodies) {
 			if (body.isStatic) {
 				g.color = Red;
@@ -111,7 +111,7 @@ class World {
 				g.color = Green;
 			}
 
-			body.collider.draw(g);
+			body.collider.render(g);
 		}
 
 		g.color = White;

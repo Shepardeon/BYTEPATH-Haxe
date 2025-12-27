@@ -1,5 +1,7 @@
 package engine.physics.colliders;
 
+import engine.physics.colliders.CollisionSolver.CollisionResponse;
+
 class CollisionMatrix {
 	private var _matrix:Array<Array<CollisionResponse>>;
 

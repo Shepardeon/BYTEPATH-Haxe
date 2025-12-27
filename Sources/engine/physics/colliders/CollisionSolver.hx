@@ -43,6 +43,6 @@ class CollisionSolver {
 		var vn = c.normal.mult(a.velocity.dot(c.normal));
 		var vt = a.velocity.sub(vn);
 
-		a.velocity = vt.sub(vn.mult(restitution));
+		a.velocity.setFrom(vt.sub(vn.mult(restitution)));
 	}
 }
