@@ -24,6 +24,7 @@ class World {
 		this.bounceRestitution = bounceRestitution;
 
 		_bodies = [];
+		_activeBodies = [];
 	}
 
 	public function initCollisionMatrix(layerCount:Int) {
@@ -48,6 +49,7 @@ class World {
 	}
 
 	public function update(dt:Float):Void {
+		// Apply forces
 		for (idx in _activeBodies) {
 			var body = _bodies[idx];
 
@@ -57,10 +59,6 @@ class World {
 			// Apply global forces
 			_applyGravity(body, dt);
 			_applyAirFriction(body);
-
-			// Apply velocity to the position
-			body.pos.x += body.velocity.x * dt;
-			body.pos.y += body.velocity.y * dt;
 		}
 
 		// Detect collisions + Ground
@@ -81,7 +79,7 @@ class World {
 				// Collision detection
 				var collision = a.collider.collide(b.collider);
 				if (!collision.isColliding) {
-					return;
+					continue;
 				}
 
 				// Collision response (will also set isGrounded)
@@ -100,6 +98,14 @@ class World {
 
 			// Apply ground friction to grounded bodies
 			_applyGroundFriction(a);
+		}
+
+		// Apply velocity to the position
+		for (idx in _activeBodies) {
+			var body = _bodies[idx];
+
+			body.pos.x += body.velocity.x * dt;
+			body.pos.y += body.velocity.y * dt;
 		}
 	}
 
