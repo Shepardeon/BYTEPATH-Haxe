@@ -1,5 +1,7 @@
 package engine.physics;
 
+import engine.physics.colliders.CollisionDispatcher;
+import kha.graphics2.Graphics;
 import engine.physics.colliders.CollisionManifold;
 import engine.physics.colliders.CollisionMatrix;
 
@@ -35,5 +37,108 @@ class World {
 		}
 	}
 
-	public function update(dt:Float):Void {}
+	public function remove(body:Body):Void {
+		if (!body.isStatic) {
+			var idx = _bodies.indexOf(body);
+			_activeBodies.remove(idx);
+		}
+
+		_bodies.remove(body);
+	}
+
+	public function update(dt:Float):Void {
+		for (idx in _activeBodies) {
+			var body = _bodies[idx];
+
+			// Reset ground property
+			body.isGrounded = false;
+
+			// Apply global forces
+			_applyGravity(body, dt);
+			_applyAirFriction(body);
+
+			// Apply velocity to the position
+			body.pos.x += body.velocity.x * dt;
+			body.pos.y += body.velocity.y * dt;
+		}
+
+		// Detect collisions + Ground
+		for (idx in _activeBodies) {
+			var a = _bodies[idx];
+
+			for (b in _bodies) {
+				// Skip ourself
+				if (a == b) {
+					continue;
+				}
+
+				// AABB pass
+				if (!a.collider.toAABB().intersects(b.collider.toAABB())) {
+					continue;
+				}
+
+				// Collision detection
+				var collision = a.collider.collide(b.collider);
+				if (!collision.isColliding) {
+					return;
+				}
+
+				// Collision response (will also set isGrounded)
+				var response = collisionMatrix.get(a.collider.layer, b.collider.layer);
+				switch (response) {
+					case Cross:
+						// Event only
+					case Touch:
+						CollisionSolver.touch(a, b, collision);
+					case Slide:
+						CollisionSolver.slide(a, b, collision);
+					case Bounce:
+						CollisionSolver.bounce(a, b, collision);
+				}
+			}
+
+			// Apply ground friction to grounded bodies
+			_applyGroundFriction(a);
+		}
+	}
+
+	public function draw(g:Graphics):Void {
+		for (body in _bodies) {
+			if (body.isStatic) {
+				g.color = Red;
+			} else {
+				g.color = Green;
+			}
+
+			body.collider.draw(g);
+		}
+
+		g.color = White;
+	}
+
+	private function _applyGravity(body:Body, dt:Float):Void {
+		if (body.isStatic) {
+			return;
+		}
+
+		body.velocity.x += xGravity * dt;
+		body.velocity.y += yGravity * dt;
+	}
+
+	private function _applyAirFriction(body:Body):Void {
+		if (body.isStatic) {
+			return;
+		}
+
+		body.velocity.x *= (1 - airFriction);
+		body.velocity.y *= (1 - airFriction);
+	}
+
+	private function _applyGroundFriction(body:Body):Void {
+		if (body.isStatic || !body.isGrounded) {
+			return;
+		}
+
+		body.velocity.x *= (1 - groundFriction);
+	}
 }

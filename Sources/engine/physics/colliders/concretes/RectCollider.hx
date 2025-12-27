@@ -1,5 +1,6 @@
 package engine.physics.colliders.concretes;
 
+import kha.graphics2.Graphics;
 import engine.physics.colliders.abstracts.Collider;
 
 class RectCollider extends Collider {
@@ -18,5 +19,9 @@ class RectCollider extends Collider {
 
 	public function toAABB():AABB {
 		return new AABB(body.pos.x - halfW, body.pos.y - halfH, width, height);
+	}
+
+	public function draw(g:Graphics):Void {
+		g.drawRect(body.pos.x - halfW, body.pos.y - halfH, width, height);
 	}
 }

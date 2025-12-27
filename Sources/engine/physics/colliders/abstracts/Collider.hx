@@ -1,5 +1,7 @@
 package engine.physics.colliders.abstracts;
 
+import kha.graphics2.Graphics;
+
 abstract class Collider {
 	public var layer(default, null):Int = 0;
 	public var body(default, null):Body;
@@ -13,4 +15,6 @@ abstract class Collider {
 	}
 
 	public abstract function toAABB():AABB;
+
+	public abstract function draw(g:Graphics):Void;
 }

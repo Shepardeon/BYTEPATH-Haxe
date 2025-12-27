@@ -7,11 +7,11 @@ import kha.math.Vector2;
 class Body {
 	public var accelerationSmoothing:Float = 10;
 	public var decelerationSmoothing:Float = 10;
+	public var isGrounded:Bool;
 
 	public var pos(default, null):Vector2;
 	public var velocity(default, null):Vector2;
 	public var isStatic(default, null):Bool;
-	public var isGrounded(default, null):Bool;
 	public var collider(default, null):Collider;
 
 	public function new(x:Float, y:Float, collider:Collider, isStatic:Bool = false) {
